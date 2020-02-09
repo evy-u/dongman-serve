@@ -3,6 +3,6 @@ module.exports = class extends think.Controller {
     /**
      * access-cross
      */
-    this.ctx.set('Access-Control-Allow-Origin', '*')
+    this.ctx.set('Access-Control-Allow-Origin', '*');
   }
 };

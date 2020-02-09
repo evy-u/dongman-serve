@@ -36,7 +36,7 @@ exports.model = {
   },
   mysql: {
     handle: mysql,
-    database: 'gongan',
+    database: 'biyeshiji',
     prefix: 'think_',
     encoding: 'utf8mb4',
     host: 'localhost',

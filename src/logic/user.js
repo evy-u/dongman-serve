@@ -1,72 +1,84 @@
 const requireRule = {
-  string: true,       
-  required: true,     
+  string: true,
+  required: true
 };
 module.exports = class extends think.Logic {
   listAction() {
     this.allowMethods = 'get';
-    let rules = {
+    const rules = {
       page: {
-        int: true,       // 字段类型为 int 类型
-        required: true,     // 字段必填
-        default: 1, // 字段默认值为 
+        int: true, // 字段类型为 int 类型
+        required: true, // 字段必填
+        default: 1 // 字段默认值为
       },
       pageSize: {
-        int: true,       // 字段类型为 int 类型
-        required: true,     // 字段必填
-        default: 10, // 字段默认值为 
+        int: true, // 字段类型为 int 类型
+        required: true, // 字段必填
+        default: 10 // 字段默认值为
       }
-    }
-    let flag = this.validate(rules);
-    if(!flag){
+    };
+    const flag = this.validate(rules);
+    if (!flag) {
       return this.fail('sorry，请求参数格式有误', []);
     }
   }
 
   addAction() {
     this.allowMethods = 'post';
-    let rules = {
-      name: requireRule,
+    const rules = {
+      username: requireRule,
       password: requireRule
+    };
+    const flag = this.validate(rules);
+    if (!flag) {
+      return this.fail('sorry，请求参数格式有误', {});
     }
-    let flag = this.validate(rules);
-    if(!flag){
+  }
+
+  loginAction() {
+    this.allowMethods = 'post';
+    const rules = {
+      username: requireRule,
+      password: requireRule
+    };
+    const flag = this.validate(rules);
+    if (!flag) {
       return this.fail('sorry，请求参数格式有误', {});
     }
   }
 
   getInfoAction() {
     this.allowMethods = 'post';
-    let rules = {
-      id: requireRule,
-    }
-    let flag = this.validate(rules);
-    if(!flag){
+    const rules = {
+      id: requireRule
+    };
+    const flag = this.validate(rules);
+    if (!flag) {
       return this.fail('sorry，请求参数格式有误', {});
-    }
+    };
   }
 
   removeAction() {
     this.allowMethods = 'post';
-    let rules = {
-      id: requireRule,
-    }
-    let flag = this.validate(rules);
-    if(!flag){
+    const rules = {
+      id: requireRule
+    };
+    const flag = this.validate(rules);
+    if (!flag) {
       return this.fail('sorry，请求参数格式有误', {});
     }
   }
 
   updateAction() {
-    let rules = {
+    const rules = {
       id: {
         required: true,
         method: 'POST'
       }
-    }
-    let flag = this.validate(rules);
-    if(!flag) {
-      return this.fail('缺少用户ID', {})
+    };
+    const flag = this.validate(rules);
+    if (!flag) {
+      return this.fail('缺少用户ID', {});
     }
   }
 };
