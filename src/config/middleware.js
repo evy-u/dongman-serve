@@ -28,8 +28,9 @@ module.exports = [
     handle: 'payload',
     options: {
       keepExtensions: true,
-      limit: '5mb'
-    }
+      limit: '5mb',
+      multiples: true
+    },
   },
   {
     handle: 'router',

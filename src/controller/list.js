@@ -3,12 +3,12 @@ const Base = require('./base.js');
 module.exports = class extends Base {
   async listAction() {
     const params = this.get();
-    const data = await this.model('user').getList(params);
+    const data = await this.model('list').getList(params);
     this.success(data);
   }
   async addAction() {
     const params = this.post();
-    const data = await this.model('user').addUser(params);
+    const data = await this.model('list').addList(params);
     this.success(data);
   }
   async loginAction() {
