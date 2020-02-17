@@ -59,7 +59,8 @@ module.exports = class extends think.Model {
         data: {
           username: result.username,
           id: result.id,
-          role: result.role
+          role: result.role,
+          star: result.star
         }
       };
     } else {
@@ -92,4 +93,43 @@ module.exports = class extends think.Model {
     const result = await this.getUserInfo(params.id);
     return result;
   }
+
+
+  async handleStar(params) {
+    const model = this.model('user');
+    const user = await model.where({id: params.userId}).find();
+    let stars = user.star ? user.star.split(",") : [];
+    if(stars.indexOf(params.id) > -1) {
+      stars.forEach((item, index)=> {
+        stars.splice(index, 1);
+      })
+    }else {
+      stars.push(params.id);
+    }
+    await model.where({id: params.userId}).update({star: stars.join(",")});
+    const result = await this.getUserInfo(params.userId);
+    return result;
+  }
+
+  async getHistory(params) {
+    const model = this.model('user');
+    const user = await model.where({id: params.userId}).find();
+    let history = user.history ? JSON.parse(user.history) : [];
+    let arr = [];
+    history.forEach(item=> {
+      arr.push("id="+item.id);
+    })
+    const queryStr = arr.join(" OR ");
+    const modelList = this.model('list');
+    const result = await modelList.where(queryStr).select();
+    result.forEach(item=> {
+      history.forEach(ls=> {
+        if(item.id == ls.id) {
+          item.currentPage = ls.currentPage;
+        }
+      })
+    })
+    return result;
+  }
+  
 };

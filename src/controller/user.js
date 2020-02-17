@@ -36,4 +36,17 @@ module.exports = class extends Base {
     const data = await this.model('user').updateUser(params);
     this.success(data);
   }
+
+  async handleStarAction() {
+    const params = this.post();
+    const data = await this.model('user').handleStar(params);
+    this.success(data);
+  }
+
+  async getHistoryAction() {
+    const params = this.get();
+    const data = await this.model('user').getHistory(params);
+    this.success(data);
+  }
+  
 };

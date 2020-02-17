@@ -19,7 +19,7 @@ module.exports = class extends think.Model {
     let type = "1";
     let lsarr = file.path.split("/");
     const filepath = path.join(think.ROOT_PATH, 'www/static/upload/' + lsarr[lsarr.length - 1]);
-    let nowpath = 'static/upload/' + lsarr[lsarr.length - 1];
+    let nowpath = '/static/upload/' + lsarr[lsarr.length - 1];
     think.mkdir(path.dirname(filepath));
     await rename(file.path, filepath);
     let id = await model.add({
