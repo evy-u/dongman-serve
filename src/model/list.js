@@ -121,35 +121,66 @@ module.exports = class extends think.Model {
     result.forEach(item=> {
       imagesArr.push('/static/' + item.url);
     })
-
+    
     // 保存观看历史
-    const id = params.id;
+    const id = params.params.id;
     const modelUser = this.model("user");
-    const userId = params.userId;
+    const userId =  params.params.userId;
     const currentPage = params.currentPage;
-    const user = modelUser.where({id: userId}).find();
+    const seconds = params.params.seconds;
+    const user = await modelUser.where({id: userId}).find();
     const history = user.history ? JSON.parse(user.history) : [];
-    let isHas = history.some(item=> {
-      return item.id == id;
-    })
-    if(isHas) {
-      history.forEach(item=> {
-        if(item.id == id) {
-          item.currentPage = currentPage;
-        }
-      })
-    }else {
-      history.push({
-        id,
-        currentPage
-      })
-    }
-    modelUser.where({id: userId}).update({history: JSON.stringify(history)});
-    return {
+    const type = params.params.type;
+    let rsultData = {
       urls: imagesArr,
       num: params.graphsLs.num,
       name: params.graphsLs.name
-    };
+    }
+    let isHas = history.some(item=> {
+      return item.id == id;
+    })
+    if(type == "1") {
+      // 动画 存储三个字段 id, currentPage, seconds，
+      if(isHas) {
+        history.forEach(item=> {
+          if(item.id == id) {
+            
+            item.currentPage = currentPage;
+            if(seconds) {
+              item.seconds = seconds;
+            }
+            rsultData.seconds = item.seconds;
+            
+          }
+        })
+      }else {
+        let obj = {
+          id,
+          currentPage,
+        }
+        if(seconds) {
+          obj.seconds = seconds;
+        }
+        history.push(obj)
+      }
+    }else if(type == "2") {
+      // 漫画 存储两个字段 id, currentPage
+      if(isHas) {
+        history.forEach(item=> {
+          if(item.id == id) {
+            item.currentPage = currentPage;
+          }
+        })
+      }else {
+        history.push({
+          id,
+          currentPage
+        })
+      }
+    }
+    console.log(rsultData, "89568957")
+    modelUser.where({id: userId}).update({history: JSON.stringify(history)});
+    return rsultData;
   }
   
 };

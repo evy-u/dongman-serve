@@ -63,7 +63,7 @@ module.exports = class extends Base {
     }
     const graphsLs = graphs[currentPage] ? graphs[currentPage] : null;
     const total = graphs.length;
-    const result = await this.model('list').getItemImage({graphsLs, currentPage, id: params.id, userId: params.userId});
+    const result = await this.model('list').getItemImage({graphsLs, currentPage, params});
     this.success({
       data: result,
       total: total

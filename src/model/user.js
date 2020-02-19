@@ -126,6 +126,9 @@ module.exports = class extends think.Model {
       history.forEach(ls=> {
         if(item.id == ls.id) {
           item.currentPage = ls.currentPage;
+          if(ls.seconds) {
+            item.seconds = ls.seconds;
+          }
         }
       })
     })
