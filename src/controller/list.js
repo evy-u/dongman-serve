@@ -59,7 +59,7 @@ module.exports = class extends Base {
     const graphs = data.graphs ? JSON.parse(data.graphs) : [];
     let currentPage = 0;
     if(params.currentPage) {
-      currentPage = params.currentPage;
+      currentPage = Number(params.currentPage) - 1;
     }
     const graphsLs = graphs[currentPage] ? graphs[currentPage] : null;
     const total = graphs.length;

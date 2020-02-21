@@ -88,10 +88,13 @@ module.exports = class extends think.Model {
     const model = this.model('list');
     const userModel = this.model("user");
     const user = await userModel.where({'id': params.userId}).find();
+    if(!user.star) {
+      return [];
+    }
     const star = user.star.split(",");
     const arr = [];
     star.forEach(item=> {
-      arr.push("id="+item);
+      arr.push("id=" + item);
     })
     const queryStr = arr.join(" OR ");
     const result = model.where(queryStr).select();
