@@ -19,7 +19,7 @@ module.exports = class extends think.Model {
       queryObj.type = type;
     }
     if(params.keyword) {
-      queryObj.name = ["like", params.keyword];
+      queryObj.name = ["like", `%${params.keyword}%`];
     }
     const result = await model.page(params.pageNumber,params.pageSize).where(queryObj).select();
     const total = await model.where(queryObj).count("id");
@@ -178,7 +178,6 @@ module.exports = class extends think.Model {
         })
       }
     }
-    console.log(rsultData, "89568957")
     modelUser.where({id: userId}).update({history: JSON.stringify(history)});
     return rsultData;
   }
