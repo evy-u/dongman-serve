@@ -115,6 +115,9 @@ module.exports = class extends think.Model {
     const model = this.model('user');
     const user = await model.where({id: params.userId}).find();
     let history = user.history ? JSON.parse(user.history) : [];
+    if(history.length == 0) {
+      return [];
+    }
     let arr = [];
     history.forEach(item=> {
       arr.push("id="+item.id);
